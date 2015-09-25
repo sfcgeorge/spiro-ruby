@@ -56,7 +56,8 @@ static VALUE spiros_to_splines(VALUE mod, VALUE spirosValue, VALUE closedValue) 
 
   // Take Ruby array of points and turn into Spiro C struct array
   spiro_cp spiros[RARRAY_LEN(spirosValue)];
-  for (int i = 0; i != RARRAY_LEN(spirosValue); i++) {
+  int i;
+  for (i = 0; i != RARRAY_LEN(spirosValue); i++) {
     VALUE nodeValue = rb_ary_entry(spirosValue, i);
     // Validate node is an array and length 3 (x, y, type)
     Check_Type(nodeValue, T_ARRAY);
@@ -91,7 +92,7 @@ static VALUE spiros_to_splines(VALUE mod, VALUE spirosValue, VALUE closedValue) 
     VALUE splinesValue = rb_ary_new();
     // Free memory from the custom struct
     bezctx_rb_close(bc);
-    for (int i = 0; i < splines.used; i++) {
+    for (i = 0; i < splines.used; i++) {
       VALUE x = rb_float_new(splines.array[i].x);
       VALUE y = rb_float_new(splines.array[i].y);
       VALUE ty = spline_type_to_sym(splines.array[i].ty);
